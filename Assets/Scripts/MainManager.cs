@@ -11,6 +11,7 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text HighScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
@@ -70,7 +71,20 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        SetHighScore();
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    void SetHighScore()
+    {
+        if (DataSaver.Instance != null) {
+            if (m_Points > DataSaver.Instance.highscore)
+            {
+                DataSaver.Instance.highscore = m_Points;
+                HighScoreText.text = $"Best Score : {DataSaver.Instance.username} : " +
+                    $"{DataSaver.Instance.highscore}";
+            }
+        }
     }
 }
