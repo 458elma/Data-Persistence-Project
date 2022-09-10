@@ -37,6 +37,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        SetHighScore();
     }
 
     private void Update()
@@ -82,8 +84,12 @@ public class MainManager : MonoBehaviour
             if (m_Points > DataSaver.Instance.highscore)
             {
                 DataSaver.Instance.highscore = m_Points;
-                HighScoreText.text = $"Best Score : {DataSaver.Instance.username} : " +
-                    $"{DataSaver.Instance.highscore}";
+                DataSaver.Instance.highscoreName = DataSaver.Instance.username;
+                DataSaver.Instance.SaveHighScore();
+            }
+            if (DataSaver.Instance.getIsScoreLoaded()) {
+                HighScoreText.text = $"Best Score : {DataSaver.Instance.highscoreName} : " +
+                        $"{DataSaver.Instance.highscore}";
             }
         }
     }
